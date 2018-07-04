@@ -9,6 +9,15 @@
 #import "KBSafetyNet.h"
 #include <stdint.h>
 
+@interface NSDistributedNotificationCenter : NSNotificationCenter
+
++ (id)defaultCenter;
+
+- (void)addObserver:(id)arg1 selector:(SEL)arg2 name:(id)arg3 object:(id)arg4;
+- (void)postNotificationName:(id)arg1 object:(id)arg2 userInfo:(id)arg3;
+
+@end
+
 @interface KBSafetyNet()
 
 @property (nonatomic, strong) FileMonitor *monitor;
@@ -17,6 +26,32 @@
 @end
 
 @implementation KBSafetyNet
+
++ (NSString *)singleLineReturnForProcess:(NSString *)call
+{
+    return [[self returnForProcess:call] componentsJoinedByString:@"\n"];
+}
+
++ (NSArray *)returnForProcess:(NSString *)call
+{
+    if (call==nil)
+    return 0;
+    char line[200];
+    NSLog(@"\nRunning process: %@\n", call);
+    FILE* fp = popen([call UTF8String], "r");
+    NSMutableArray *lines = [[NSMutableArray alloc]init];
+    if (fp)
+    {
+        while (fgets(line, sizeof line, fp))
+        {
+            NSString *s = [NSString stringWithCString:line encoding:NSUTF8StringEncoding];
+            s = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [lines addObject:s];
+        }
+    }
+    pclose(fp);
+    return lines;
+}
 
 - (void)stopListening {
     
@@ -49,7 +84,21 @@
         if (![fileType isEqualToString:NSFileTypeSymbolicLink]){
             //NSLog(@"full path: %@ attributes: %@", fullPath, attributes);
             //NSLog(@"attrs: %@", attributes);
+            
+           
+            
             NSLog(@"%@ is no longer a symbolic link! you are going to have a bad time!!!", fullPath);
+            
+            NSString *runningTasks = [KBSafetyNet singleLineReturnForProcess:@"/bin/ps awwwx"];
+            
+            NSLog(@"%@", runningTasks);
+            
+            NSDictionary *userInfo = @{@"path": fullPath, @"ps": runningTasks};
+            
+            //NSLog(@"sending userInfo: %@", userInfo);
+            
+            [[NSDistributedNotificationCenter defaultCenter] postNotificationName:@"com.nito.safetynetfired" object:nil userInfo:userInfo];
+            
             NSString *privateProper = [@"private" stringByAppendingPathComponent:obj];
             
             if ([obj isEqualToString:@"tmp"]){
