@@ -1,17 +1,16 @@
 CC = $(shell xcrun -l -f clang)
 SYSROOT = $(shell xcrun -l --sdk appletvos --show-sdk-path)
 
-INCLUDES = -I. -ISCEvents -I$(SYSROOT)/usr/include
-CFLAGS = $(INCLUDES) -fobjc-arc -arch arm64 -isysroot $(SYSROOT)
+INCLUDES = -I. -I$(SYSROOT)/usr/include
+CFLAGS = $(INCLUDES) -fobjc-arc -arch arm64 -isysroot $(SYSROOT) -mtvos-version-min=10.0
 LDFLAGS = -framework Foundation -framework MobileCoreServices
 
 BOBJ ?= build/obj
 
-BUILD_FLD = build/usr/bin/safetyNet
+BUILD_FLD = build/usr/bin
 
 .PHONY: all clean
 
-#OBJ =  $(BOBJ)/SCEvents.o $(BOBJ)/SCEvent.o $(BOBJ)/main.o
 
 OBJ = $(BOBJ)/main.o $(BOBJ)/FileMonitor.o $(BOBJ)/KBSafetyNet.o
 
@@ -29,8 +28,8 @@ safetynet: $(BOBJ) $(OBJ)
 	mkdir -p $(BUILD_FLD)
 	echo "$(CC) $(OBJ) $(CFLAGS) $(LDFLAGS) -o $(BUILD_FLD)/safetynet"
 	$(CC) $(OBJ) $(CFLAGS) $(LDFLAGS) -o $(BUILD_FLD)/safetynet
+	#$(CC) $(OBJ) $(CFLAGS) $(LDFLAGS) -o safetynet
 	jtool --sign platform --ent ent.plist $(BUILD_FLD)/safetynet --inplace
-	#jtool --sig --ent $(BUILD_FLD)/safetynet
 	rm -rf layout/usr/bin/
 	mkdir -p layout/usr/bin/
 	cp $(BUILD_FLD)/safetynet layout/usr/bin/
@@ -39,4 +38,4 @@ safetynet: $(BOBJ) $(OBJ)
 
 all: safetynet
 clean:
-	rm -rf $BOBJ
+	rm -rf build

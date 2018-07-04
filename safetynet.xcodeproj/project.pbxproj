@@ -31,6 +31,7 @@
 		325E393B20ED2B6500F4FECE /* KBSafetyNet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KBSafetyNet.m; sourceTree = "<group>"; };
 		325E397920ED3ACA00F4FECE /* FileMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileMonitor.h; sourceTree = "<group>"; };
 		325E397A20ED3ACA00F4FECE /* FileMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileMonitor.m; sourceTree = "<group>"; };
+		325E398020ED547E00F4FECE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = safetynet/Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +48,7 @@
 		325E392020ED2AB000F4FECE = {
 			isa = PBXGroup;
 			children = (
+				325E398020ED547E00F4FECE /* Makefile */,
 				325E392B20ED2AB000F4FECE /* safetynet */,
 				325E392A20ED2AB000F4FECE /* Products */,
 			);
@@ -73,6 +75,23 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		325E397C20ED4FD800F4FECE /* safetynetios */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = all;
+			buildConfigurationList = 325E397F20ED4FD800F4FECE /* Build configuration list for PBXLegacyTarget "safetynetios" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = $SRCROOT/safetynet;
+			dependencies = (
+			);
+			name = safetynetios;
+			passBuildSettingsInEnvironment = 1;
+			productName = safetynetios;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		325E392820ED2AB000F4FECE /* safetynet */ = {
@@ -105,6 +124,10 @@
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
 					};
+					325E397C20ED4FD800F4FECE = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 325E392420ED2AB000F4FECE /* Build configuration list for PBXProject "safetynet" */;
@@ -120,6 +143,7 @@
 			projectRoot = "";
 			targets = (
 				325E392820ED2AB000F4FECE /* safetynet */,
+				325E397C20ED4FD800F4FECE /* safetynetios */,
 			);
 		};
 /* End PBXProject section */
@@ -259,6 +283,33 @@
 			};
 			name = Release;
 		};
+		325E397D20ED4FD800F4FECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9EUFEA5U7G;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		325E397E20ED4FD800F4FECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9EUFEA5U7G;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -276,6 +327,15 @@
 			buildConfigurations = (
 				325E393120ED2AB000F4FECE /* Debug */,
 				325E393220ED2AB000F4FECE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		325E397F20ED4FD800F4FECE /* Build configuration list for PBXLegacyTarget "safetynetios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				325E397D20ED4FD800F4FECE /* Debug */,
+				325E397E20ED4FD800F4FECE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
