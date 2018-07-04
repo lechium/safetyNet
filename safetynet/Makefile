@@ -35,10 +35,6 @@ safetynet: $(BOBJ) $(OBJ)
 	mkdir -p layout/usr/bin/
 	cp $(BUILD_FLD)/safetynet layout/usr/bin/
 
-#safetynet: KBSafetyNet.m main.m SCEvents/SCEvent.m SCEvents/SCEvents.m
-#	$CC -fobjc-arc -arch arm64 -ISCEvents -framework Foundation -framework MobileCoreServices -o nitoInstaller nitoInstaller.m Download/URLDownloader.m Download/URLCredential.m
-#jtool --sign platform nitoInstaller --inplace
-#		ldid -S nitoInstaller
 
 
 all: safetynet
