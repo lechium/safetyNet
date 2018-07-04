@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+launchctl load /Library/LaunchDaemons/com.nito.safetynet.plist

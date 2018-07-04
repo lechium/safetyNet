@@ -6,6 +6,8 @@
 build/
 DerivedData/
 
+*.deb
+*build/*
 ## Various settings
 *.pbxuser
 !default.pbxuser

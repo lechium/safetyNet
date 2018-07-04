@@ -1,0 +1,10 @@
+Package: com.nito.safetynet
+Priority: Extra
+Name: tssagent
+Pre-Depends: cy+model.appletv, firmware (>= 10.0) 
+Version: 1.0-1
+Architecture: appletvos-arm64
+Description: Keeps the crucial /private/etc /private/tmp /private/var symbolic links intact.
+Maintainer: Kevin Bradley
+Author: Kevin Bradley
+Section: Utilities
