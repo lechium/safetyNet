@@ -8,6 +8,8 @@
 
 #import "KBSafetyNet.h"
 #include <stdint.h>
+#include <IOKit/pwr_mgt/IOPMLib.h>
+#include <sys/utsname.h>
 
 @interface NSDistributedNotificationCenter : NSNotificationCenter
 
@@ -22,10 +24,30 @@
 
 @property (nonatomic, strong) FileMonitor *monitor;
 @property (nonatomic, strong) NSString *ourDirectory;
+@property (readwrite, assign) BOOL sleepDisabled;
 
 @end
 
 @implementation KBSafetyNet
+
+- (void)disableSleepIfNecessary {
+    
+    if (self.sleepDisabled) return;
+    struct utsname u;
+    uname(&u);
+    NSString *machine = [NSString stringWithUTF8String:u.machine];
+    if ([machine isEqualToString:@"AppleTV5,3"]){
+        
+         NSLog(@"\nAttempting to disable sleep...\n");
+        
+        static IOPMAssertionID assertionID = 0;
+        CFStringRef reasonForActivity= CFSTR("safetynet requested to disable system sleep");
+        IOPMAssertionCreateWithName(kIOPMAssertPreventUserIdleSystemSleep,
+                                    kIOPMAssertionLevelOn, reasonForActivity, &assertionID);
+        self.sleepDisabled = true;
+    }
+    
+}
 
 + (NSString *)singleLineReturnForProcess:(NSString *)call
 {
@@ -35,7 +57,7 @@
 + (NSArray *)returnForProcess:(NSString *)call
 {
     if (call==nil)
-    return 0;
+        return 0;
     char line[200];
     NSLog(@"\nRunning process: %@\n", call);
     FILE* fp = popen([call UTF8String], "r");
@@ -61,15 +83,13 @@
 
 - (void)startListening {
     
+    self.sleepDisabled = false;
     self.monitor = [FileMonitor new];
-    
     self.ourDirectory = @"/";
-    
     NSLog(@"our dir: %@", self.ourDirectory);
-    
-    
     [self.monitor monitorDir:self.ourDirectory delegate:self];
     [self dirChanged:self.ourDirectory];
+    [self disableSleepIfNecessary];
 }
 
 -(void) dirChanged:(NSString*) aDirName {
@@ -85,7 +105,7 @@
             //NSLog(@"full path: %@ attributes: %@", fullPath, attributes);
             //NSLog(@"attrs: %@", attributes);
             
-           
+            
             
             NSLog(@"%@ is no longer a symbolic link! you are going to have a bad time!!!", fullPath);
             

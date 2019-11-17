@@ -1,9 +1,9 @@
 CC = $(shell xcrun -l -f clang)
 SYSROOT = $(shell xcrun -l --sdk appletvos --show-sdk-path)
 
-INCLUDES = -I. -I$(SYSROOT)/usr/include
+INCLUDES = -I. -I$(SYSROOT)/usr/include -Iinclude -F.
 CFLAGS = $(INCLUDES) -fobjc-arc -arch arm64 -isysroot $(SYSROOT) -mtvos-version-min=10.0
-LDFLAGS = -framework Foundation -framework MobileCoreServices
+LDFLAGS = -framework Foundation -framework MobileCoreServices -framework IOKit
 
 BOBJ ?= build/obj
 

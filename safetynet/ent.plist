@@ -2,11 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>platform-application</key>
-	<true/>
 	<key>com.apple.private.skip-library-validation</key>
 	<true/>
 	<key>com.apple.private.security.no-container</key>
 	<true/>
+	<key>platform-application</key>
+	<true/>
+	<key>com.apple.appletv.pbs.allow-screen-saver</key>
+	<true/>
+	<key>com.apple.appletv.pbs.allow-shared-state-access</key>
+	<true/>
+	<key>com.apple.appletv.pbs.allow-sleep</key>
+	<true/>
+	<key>com.apple.appletv.pbs.allow-sleep-timeout</key>
+	<true/>
+	<key>com.apple.backboard.client</key>
+	<true/>
+	<key>com.apple.SystemConfiguration.SCPreferences-write-access</key>
+	<array>
+		<string>com.apple.wifi.plist</string>
+		<string>preferences.plist</string>
+		<string>com.apple.network.identification.plist</string>
+		<string>com.apple.PowerManagement.plist</string>
+	</array>
 </dict>
 </plist>
